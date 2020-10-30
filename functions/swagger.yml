@@ -1,0 +1,17 @@
+swagger: "2.0"
+info:
+  description: "Cloud functions for firebase firestore[sensei]"
+  version: "1.0.0"
+  title: "cloudfunctions"
+  license:
+    name: "MIT"
+    url: "https://www.apache.org/licenses/LICENSE-2.0.html"
+basePath: "/api/v1"
+tags:
+- name: "users"
+  description: "User operations"
+schemes:
+  - "https"
+  - "http"
+paths:
+  

@@ -28,8 +28,8 @@ class SettingsController {
   static async create(req, res) {
     try {
       await db.collection(SettingsController.parameters).add({
-        metaname: req.body.metaname,
         metatype: req.body.metatype,
+        metakey: req.body.metakey,
         metavalue: req.body.metavalue,
         createdat: FieldValue.serverTimestamp(),
         updatedat: FieldValue.serverTimestamp(),
@@ -63,8 +63,8 @@ class SettingsController {
       const document = await db.collection(SettingsController.parameters).doc(req.params.id);
 
       await document.update({
-        metaname: req.body.metaname,
         metatype: req.body.metatype,
+        metakey: req.body.metakey,
         metavalue: req.body.metavalue,
         updatedat: FieldValue.serverTimestamp(),
       })
@@ -164,8 +164,8 @@ class SettingsController {
         for (let doc of docs) {
           const selectedItem = {
             id: doc.id,
-            metaname: doc.data().metaname,
             metatype: doc.data().metatype,
+            metakey: doc.data().metakey,
             metavalue: doc.data().metavalue,
             createdat: doc.data().createdat,
             updatedat: doc.data().updatedat,

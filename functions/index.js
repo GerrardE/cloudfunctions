@@ -36,4 +36,8 @@ index.listen(port, () => {
   debugged(`Listening on port ${port}`);
 });
 
+/* Node 8 is deprecated
+* Starting Feb 15, 2021, we'll no longer support new deploys or updates of Node.js 8 functions.
+* Starting Mar 15, 2021, we'll no longer support executions of existing Node.js 8 functions.
+*/
 exports.app = functions.https.onRequest(index);

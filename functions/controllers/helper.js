@@ -10,7 +10,7 @@ class Response {
    * @returns {object} object
    * @memberof Response
    */
-  static error(res, code, payload, message = "Unsuccessful operation") {
+  static error(res, code, message = "Unsuccessful operation", payload={}) {
     return res.status(code).json({
       hasError: "true",
       message,

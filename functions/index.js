@@ -1,18 +1,13 @@
 const functions = require("firebase-functions");
 const cors = require("cors");
-const debug = require("debug");
 const { config } = require("dotenv");
-const logger = require("morgan");
-const swaggerUi = require("swagger-ui-express");
 const apis = require("./routes/api");
-const swaggerSpec = require("./config/swagger");
 const express = require("express");
 
-const debugged = debug("index");
 config();
 
 const index = express();
-const port = process.env.PORT || 4000;
+const port = process.env.PORT || 6700;
 
 const corsOptions = {
   origin: "*",
@@ -25,15 +20,10 @@ const corsOptions = {
 // Use the CORS
 index.use(cors(corsOptions));
 
-index.use(logger("dev"));
-
 index.use("/api/v1", apis.apiRouter);
 
-// swagger-ui-express for API endpoint documentation
-index.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
-
 index.listen(port, () => {
-  debugged(`Listening on port ${port}`);
+  console.log(`Listening on port ${port}`);
 });
 
 /* Node 8 is deprecated

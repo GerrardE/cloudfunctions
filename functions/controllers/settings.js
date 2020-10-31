@@ -38,14 +38,15 @@ class SettingsController {
       response.success(
         res,
         201,
-        `${SettingsController.parameter} created successfully`
+        `${SettingsController.parameter} created successfully`,
+        {}
       );
     } catch (errors) {
       response.error(
         res,
         500,
-        errors,
-        `${SettingsController.parameters} could not be created`
+        `${SettingsController.parameters} could not be created`,
+        errors
       );
     }
   }
@@ -72,14 +73,15 @@ class SettingsController {
       response.success(
         res,
         201,
-        `${SettingsController.parameter} updated successfully`
+        `${SettingsController.parameter} updated successfully`,
+        {}
       );
     } catch (errors) {
       response.error(
         res,
         500,
-        errors,
-        `${SettingsController.parameters} could not be updated`
+        `${SettingsController.parameters} could not be updated`,
+        errors
       );
     }
   }
@@ -110,8 +112,8 @@ class SettingsController {
       response.error(
         res,
         500,
-        error,
-        `${SettingsController.parameter} could not be retrieved`
+        `${SettingsController.parameter} could not be retrieved`,
+        error
       );
     }
   }
@@ -135,13 +137,14 @@ class SettingsController {
         res,
         200,
         `${SettingsController.parameter} deleted successfully`,
+        {}
       );
     } catch (error) {
       response.error(
         res,
         500,
-        error,
-        `${SettingsController.parameter} could not be deleted`
+        `${SettingsController.parameter} could not be deleted`,
+        error
       );
     }
   }
@@ -187,8 +190,8 @@ class SettingsController {
       response.error(
         res,
         500,
-        error,
-        `${SettingsController.parameters} could not be retrieved`
+        `${SettingsController.parameters} could not be retrieved`,
+        error
       );
     }
   }

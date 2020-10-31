@@ -27,11 +27,11 @@ class Response {
    * @returns {object} object
    * @memberof Response
    */
-  static success(res, code, payload, message = "Successful operation") {
+  static success(res, code, message = "Successful operation", payload={}) {
     return res.status(code).json({
       hasError: "false",
       message,
-      payload,
+      payload
     });
   }
 }

@@ -1,6 +1,4 @@
 const functions = require("firebase-functions");
-const admin = require("firebase-admin");
-const express = require("express");
 const cors = require("cors");
 const debug = require("debug");
 const { config } = require("dotenv");
@@ -8,18 +6,13 @@ const logger = require("morgan");
 const swaggerUi = require("swagger-ui-express");
 const apis = require("./routes/api");
 const swaggerSpec = require("./config/swagger");
-const serviceAccount = require("./serviceAccountKey.json");
+const express = require("express");
 
 const debugged = debug("index");
 config();
 
 const index = express();
 const port = process.env.PORT || 4000;
-
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
-  databaseURL: "https://sensei-edfdf.firebaseio.com",
-});
 
 const corsOptions = {
   origin: "*",

@@ -3,26 +3,27 @@ const FieldValue = require("firebase-admin").firestore.FieldValue;
 const db = require("./config").db;
 
 /**
- * Settings Controller
+ * Users Controller
  * @async
- * @class SettingsController
+ * @class UsersController
  */
 
-class SettingsController {
+class UsersController {
   /**
    * @static
    * @param {*} req - Request object
    * @param {*} res - Response object
    * @param {*} next - The next middleware
    * @return {json} Returns json object
-   * @memberof SettingsController
+   * @memberof UsersController
    */
   static async create(req, res) {
     try {
-      await db.collection(SettingsController.parameters).add({
-        metatype: req.body.metatype,
-        metakey: req.body.metakey,
-        metavalue: req.body.metavalue,
+      await db.collection(UsersController.parameters).add({
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        email: req.body.email,
+        password: req.body.password,
         createdat: FieldValue.serverTimestamp(),
         updatedat: FieldValue.serverTimestamp(),
       });
@@ -30,14 +31,14 @@ class SettingsController {
       response.success(
         res,
         201,
-        `${SettingsController.parameter} created successfully`,
+        `${UsersController.parameter} created successfully`,
         {}
       );
     } catch (errors) {
       response.error(
         res,
         500,
-        `${SettingsController.parameters} could not be created`,
+        `${UsersController.parameters} could not be created`,
         errors
       );
     }
@@ -49,30 +50,31 @@ class SettingsController {
    * @param {*} res - Response object
    * @param {*} next - The next middleware
    * @return {json} Returns json object
-   * @memberof SettingsController
+   * @memberof UsersController
    */
   static async update(req, res) {
     try {
-      const document = await db.collection(SettingsController.parameters).doc(req.params.id);
+      const document = await db.collection(UsersController.parameters).doc(req.params.id);
 
       await document.update({
-        metatype: req.body.metatype,
-        metakey: req.body.metakey,
-        metavalue: req.body.metavalue,
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        email: req.body.email,
+        password: req.body.password,
         updatedat: FieldValue.serverTimestamp(),
       })
 
       response.success(
         res,
         201,
-        `${SettingsController.parameter} updated successfully`,
+        `${UsersController.parameter} updated successfully`,
         {}
       );
     } catch (errors) {
       response.error(
         res,
         500,
-        `${SettingsController.parameters} could not be updated`,
+        `${UsersController.parameters} could not be updated`,
         errors
       );
     }
@@ -84,12 +86,12 @@ class SettingsController {
    * @param {*} res - Response object
    * @param {*} next - The next middleware
    * @return {json} Returns json object
-   * @memberof SettingsController
+   * @memberof UsersController
    */
   static async getOne(req, res) {
     try {
       const document = await db
-        .collection(SettingsController.parameters)
+        .collection(UsersController.parameters)
         .doc(req.params.id);
       const resp = await document.get();
       const payload = resp.data();
@@ -97,14 +99,14 @@ class SettingsController {
       response.success(
         res,
         200,
-        `${SettingsController.parameter} retrieved successfully`,
+        `${UsersController.parameter} retrieved successfully`,
         payload
       );
     } catch (error) {
       response.error(
         res,
         500,
-        `${SettingsController.parameter} could not be retrieved`,
+        `${UsersController.parameter} could not be retrieved`,
         error
       );
     }
@@ -116,26 +118,26 @@ class SettingsController {
    * @param {*} res - Response object
    * @param {*} next - The next middleware
    * @return {json} Returns json object
-   * @memberof SettingsController
+   * @memberof UsersController
    */
   static async delete(req, res) {
     try {
       const document = await db
-        .collection(SettingsController.parameters)
+        .collection(UsersController.parameters)
         .doc(req.params.id);
       await document.delete();
 
       response.success(
         res,
         200,
-        `${SettingsController.parameter} deleted successfully`,
+        `${UsersController.parameter} deleted successfully`,
         {}
       );
     } catch (error) {
       response.error(
         res,
         500,
-        `${SettingsController.parameter} could not be deleted`,
+        `${UsersController.parameter} could not be deleted`,
         error
       );
     }
@@ -147,11 +149,11 @@ class SettingsController {
    * @param {*} res - Response object
    * @param {*} next - The next middleware
    * @return {json} Returns json object
-   * @memberof SettingsController
+   * @memberof UsersController
    */
   static async getAll(req, res) {
     try {
-      const document = await db.collection(SettingsController.parameters);
+      const document = await db.collection(UsersController.parameters);
       const payload = [];
 
       await document.get().then((querySnapshot) => {
@@ -159,9 +161,9 @@ class SettingsController {
         for (let doc of docs) {
           const selectedItem = {
             id: doc.id,
-            metatype: doc.data().metatype,
-            metakey: doc.data().metakey,
-            metavalue: doc.data().metavalue,
+            firstName: doc.data().firstName,
+            lastName: doc.data().lastName,
+            email: doc.data().email,
             createdat: doc.data().createdat,
             updatedat: doc.data().updatedat,
           };
@@ -175,20 +177,20 @@ class SettingsController {
       response.success(
         res,
         200,
-        `${SettingsController.parameters} retrieved successfully`,
+        `${UsersController.parameters} retrieved successfully`,
         payload
       );
     } catch (error) {
       response.error(
         res,
         500,
-        `${SettingsController.parameters} could not be retrieved`,
+        `${UsersController.parameters} could not be retrieved`,
         error
       );
     }
   }
 }
-SettingsController.parameters = "settings";
-SettingsController.parameter = "setting";
+UsersController.parameters = "users";
+UsersController.parameter = "user";
 
-module.exports = { SettingsController };
+module.exports = { UsersController };

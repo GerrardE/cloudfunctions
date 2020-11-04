@@ -3,26 +3,25 @@ const FieldValue = require("firebase-admin").firestore.FieldValue;
 const db = require("./config").db;
 
 /**
- * Settings Controller
+ * Blacklists Controller
  * @async
- * @class SettingsController
+ * @class BlacklistsController
  */
 
-class SettingsController {
+class BlacklistsController {
   /**
    * @static
    * @param {*} req - Request object
    * @param {*} res - Response object
    * @param {*} next - The next middleware
    * @return {json} Returns json object
-   * @memberof SettingsController
+   * @memberof BlacklistsController
    */
   static async create(req, res) {
     try {
-      await db.collection(SettingsController.parameters).add({
-        metatype: req.body.metatype,
-        metakey: req.body.metakey,
-        metavalue: req.body.metavalue,
+      await db.collection(BlacklistsController.parameters).add({
+        entitytype: req.body.entitytype,
+        entity: req.body.entity,
         createdat: FieldValue.serverTimestamp(),
         updatedat: FieldValue.serverTimestamp(),
       });
@@ -30,14 +29,14 @@ class SettingsController {
       response.success(
         res,
         201,
-        `${SettingsController.parameter} created successfully`,
+        `${BlacklistsController.parameter} created successfully`,
         {}
       );
     } catch (errors) {
       response.error(
         res,
         500,
-        `${SettingsController.parameters} could not be created`,
+        `${BlacklistsController.parameters} could not be created`,
         errors
       );
     }
@@ -49,30 +48,29 @@ class SettingsController {
    * @param {*} res - Response object
    * @param {*} next - The next middleware
    * @return {json} Returns json object
-   * @memberof SettingsController
+   * @memberof BlacklistsController
    */
   static async update(req, res) {
     try {
-      const document = await db.collection(SettingsController.parameters).doc(req.params.id);
+      const document = await db.collection(BlacklistsController.parameters).doc(req.params.id);
 
       await document.update({
-        metatype: req.body.metatype,
-        metakey: req.body.metakey,
-        metavalue: req.body.metavalue,
+        entitytype: req.body.entitytype,
+        entity: req.body.entity,
         updatedat: FieldValue.serverTimestamp(),
       })
 
       response.success(
         res,
         201,
-        `${SettingsController.parameter} updated successfully`,
+        `${BlacklistsController.parameter} updated successfully`,
         {}
       );
     } catch (errors) {
       response.error(
         res,
         500,
-        `${SettingsController.parameters} could not be updated`,
+        `${BlacklistsController.parameters} could not be updated`,
         errors
       );
     }
@@ -84,12 +82,12 @@ class SettingsController {
    * @param {*} res - Response object
    * @param {*} next - The next middleware
    * @return {json} Returns json object
-   * @memberof SettingsController
+   * @memberof BlacklistsController
    */
   static async getOne(req, res) {
     try {
       const document = await db
-        .collection(SettingsController.parameters)
+        .collection(BlacklistsController.parameters)
         .doc(req.params.id);
       const resp = await document.get();
       const payload = resp.data();
@@ -97,14 +95,14 @@ class SettingsController {
       response.success(
         res,
         200,
-        `${SettingsController.parameter} retrieved successfully`,
+        `${BlacklistsController.parameter} retrieved successfully`,
         payload
       );
     } catch (error) {
       response.error(
         res,
         500,
-        `${SettingsController.parameter} could not be retrieved`,
+        `${BlacklistsController.parameter} could not be retrieved`,
         error
       );
     }
@@ -116,26 +114,26 @@ class SettingsController {
    * @param {*} res - Response object
    * @param {*} next - The next middleware
    * @return {json} Returns json object
-   * @memberof SettingsController
+   * @memberof BlacklistsController
    */
   static async delete(req, res) {
     try {
       const document = await db
-        .collection(SettingsController.parameters)
+        .collection(BlacklistsController.parameters)
         .doc(req.params.id);
       await document.delete();
 
       response.success(
         res,
         200,
-        `${SettingsController.parameter} deleted successfully`,
+        `${BlacklistsController.parameter} deleted successfully`,
         {}
       );
     } catch (error) {
       response.error(
         res,
         500,
-        `${SettingsController.parameter} could not be deleted`,
+        `${BlacklistsController.parameter} could not be deleted`,
         error
       );
     }
@@ -147,11 +145,11 @@ class SettingsController {
    * @param {*} res - Response object
    * @param {*} next - The next middleware
    * @return {json} Returns json object
-   * @memberof SettingsController
+   * @memberof BlacklistsController
    */
   static async getAll(req, res) {
     try {
-      const document = await db.collection(SettingsController.parameters);
+      const document = await db.collection(BlacklistsController.parameters);
       const payload = [];
 
       await document.get().then((querySnapshot) => {
@@ -159,9 +157,8 @@ class SettingsController {
         for (let doc of docs) {
           const selectedItem = {
             id: doc.id,
-            metatype: doc.data().metatype,
-            metakey: doc.data().metakey,
-            metavalue: doc.data().metavalue,
+            entitytype: doc.data().entitytype,
+            entity: doc.data().entity,
             createdat: doc.data().createdat,
             updatedat: doc.data().updatedat,
           };
@@ -175,20 +172,20 @@ class SettingsController {
       response.success(
         res,
         200,
-        `${SettingsController.parameters} retrieved successfully`,
+        `${BlacklistsController.parameters} retrieved successfully`,
         payload
       );
     } catch (error) {
       response.error(
         res,
         500,
-        `${SettingsController.parameters} could not be retrieved`,
+        `${BlacklistsController.parameters} could not be retrieved`,
         error
       );
     }
   }
 }
-SettingsController.parameters = "settings";
-SettingsController.parameter = "setting";
+BlacklistsController.parameters = "blacklists";
+BlacklistsController.parameter = "blacklist";
 
-module.exports = { SettingsController };
+module.exports = { BlacklistsController };

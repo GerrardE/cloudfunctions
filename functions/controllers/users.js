@@ -1,5 +1,4 @@
 const response = require("./helper").Response;
-const FieldValue = require("firebase-admin").firestore.FieldValue;
 const db = require("./config").db;
 
 /**
@@ -24,8 +23,9 @@ class UsersController {
         lastName: req.body.lastName,
         email: req.body.email,
         password: req.body.password,
-        createdat: FieldValue.serverTimestamp(),
-        updatedat: FieldValue.serverTimestamp(),
+        socialAuth: req.body.socialAuth,
+        createdat: Date.now(),
+        updatedat: Date.now(),
       });
 
       response.success(
@@ -61,7 +61,8 @@ class UsersController {
         lastName: req.body.lastName,
         email: req.body.email,
         password: req.body.password,
-        updatedat: FieldValue.serverTimestamp(),
+        socialAuth: req.body.socialAuth,
+        updatedat: Date.now(),
       })
 
       response.success(
@@ -164,6 +165,7 @@ class UsersController {
             firstName: doc.data().firstName,
             lastName: doc.data().lastName,
             email: doc.data().email,
+            socialAuth: doc.data().socialAuth,
             createdat: doc.data().createdat,
             updatedat: doc.data().updatedat,
           };
